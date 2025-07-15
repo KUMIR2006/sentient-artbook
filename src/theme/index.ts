@@ -4,8 +4,8 @@ const config = defineConfig({
   theme: {
     tokens: {
       fonts: {
-        heading: { value: `'Figtree', sans-serif` },
-        body: { value: `'Figtree', sans-serif` },
+        heading: { value: `'IBM Plex Mono', monospace` },
+        body: { value: `'IBM Plex Mono', monospace` },
       },
       // можно добавить цветовые токены, semanticTokens и другие настройки
     },

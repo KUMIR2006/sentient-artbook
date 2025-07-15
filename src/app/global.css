@@ -12,3 +12,8 @@
 .masonry-grid_column > div {
   margin-bottom: 10px; /* Вертикальный отступ между карточками, можно оставить */
 }
+
+.snap-card:hover .overlay-content {
+  opacity: 1;
+  transform: translateY(0);
+}

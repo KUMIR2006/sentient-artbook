@@ -185,7 +185,7 @@ export default function SnapGallery() {
   return (
     <>
       <HeroHeader />
-      <Box pt={0} pb={{ base: 8, md: 16 }} px={{ base: 4, md: 8 }}>
+      <Box pt={0} mx="auto" pb={{ base: 8, md: 16 }} px={{ base: 4, md: 8 }}>
         <Masonry
           breakpointCols={breakpointColumnsObj}
           className="masonry-grid"

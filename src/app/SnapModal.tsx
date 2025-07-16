@@ -26,7 +26,7 @@ export default function SnapModal({
   discord,
   createdAt,
 }: SnapModalProps) {
-  // Закрытие по Esc
+  // Close modal on Escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -129,7 +129,7 @@ export default function SnapModal({
               </VStack>
             </Box>
 
-            {/* Правая часть: Фото */}
+            {/* Photo */}
             <Box
               flex="1"
               display="flex"

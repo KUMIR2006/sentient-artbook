@@ -1,8 +1,12 @@
 'use client';
-
-import { Box, Heading, Text, Stack } from '@chakra-ui/react';
+import { Button, Box, Heading, Text, Stack, Input, useDisclosure } from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
+import { InputGroup, InputLeftElement } from '@chakra-ui/input';
+import FormModal from './FormModal';
 
 export default function HeroHeader() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const { open, onOpen, onClose } = useDisclosure();
   return (
     <Box position="relative" w="full" h="500px" overflow="hidden" rounded="lg">
       <Box
@@ -14,7 +18,7 @@ export default function HeroHeader() {
         filter="invert(1)"
         zIndex={0}
       />
-
+      <FormModal isOpen={open} onClose={onClose} />
       <Stack
         position="relative"
         zIndex={1}
@@ -22,15 +26,43 @@ export default function HeroHeader() {
         align="center"
         justify="center"
         textAlign="center"
-        px={4}
         color="white">
-        <Heading fontSize={{ base: '3xl', md: '5xl' }} fontWeight="bold">
+        <Heading fontSize={{ base: '3xl', md: '5xl' }} mt={{ base: 10, md: 20 }} fontWeight="bold">
           Sentient Artbook
         </Heading>
         <Text fontSize={{ base: 'sm', md: 'md' }} maxW="600px">
           Place where people can share art around the Sentient world Contribute, tag, and explore
           the art of others
         </Text>
+        <Button
+          onClick={onOpen}
+          mt={{ base: 2, md: 4 }}
+          bg="#bc8634"
+          color="white"
+          _hover={{ bg: '#d6a664' }}>
+          Submit your art
+        </Button>
+        <Box w="full" maxW={{ base: '100%', md: '400px', lg: '600px' }} mt={10} pb={4} mx="auto">
+          <InputGroup>
+            <Input
+              placeholder="Search by tag or description..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              bg="gray.800"
+              color="white"
+              _placeholder={{ color: 'gray.500' }}
+              border="none"
+              px={4}
+              py={3}
+              borderRadius="2xl" // большое скругление
+              fontSize="lg"
+              _hover={{ bg: 'gray.700' }}
+              _focus={{ bg: 'gray.700', boxShadow: '0 0 0 1px #63b3ed' }}
+              boxShadow="inset 2px 2px 5px rgba(0,0,0,0.6), inset -2px -2px 5px rgba(255,255,255,0.05)"
+              transition="all 0.2s ease"
+            />
+          </InputGroup>
+        </Box>
       </Stack>
     </Box>
   );

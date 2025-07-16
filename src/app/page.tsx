@@ -12,7 +12,7 @@ const cards = [
     message: 'Foggy bridge',
     tags: ['urban', 'night', 'city'],
     twitter: '@creaiser',
-    discord: 'foggy#2345',
+    discord: 'crea1ser',
     createdAt: '2025-07-08T09:19:27.720767',
   },
   {

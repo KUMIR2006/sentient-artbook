@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Box, Button, Input } from '@chakra-ui/react';
+import { Box, Button, Input, FileUpload, Icon } from '@chakra-ui/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { FormControl, FormLabel } from '@chakra-ui/form-control';
+import { HiUpload } from 'react-icons/hi';
 
 const MotionBox = motion(Box);
 type FormModalProps = {
@@ -37,6 +38,32 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
     if (isOpen) window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Date.now()}.${fileExt}`;
+    const filePath = `artworks/${fileName}`; // можно добавить user_id в путь
+
+    const { data, error } = await supabase.storage
+      .from('artworks') // название bucket'а
+      .upload(filePath, file);
+
+    if (error) {
+      console.error('Upload error:', error.message);
+      return;
+    }
+
+    const { data: publicUrlData } = supabase.storage.from('artworks').getPublicUrl(filePath);
+
+    const publicUrl = publicUrlData?.publicUrl;
+    console.log('Image uploaded at:', publicUrl);
+
+    // теперь ты можешь использовать publicUrl как значение поля image_url
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -75,17 +102,6 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
             <Box fontSize="xl" fontWeight="bold" mb={4}>
               Submit Your Art
             </Box>
-
-            <FormControl mb={3}>
-              <FormLabel>Image URL</FormLabel>
-              <Input
-                name="imageUrl"
-                placeholder="https://example.com/image.jpg"
-                value={form.imageUrl}
-                onChange={handleChange}
-                bg="#1a1a1e"
-              />
-            </FormControl>
 
             <FormControl mb={3}>
               <FormLabel>Title</FormLabel>
@@ -129,6 +145,21 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
                 onChange={handleChange}
                 bg="#1a1a1e"
               />
+            </FormControl>
+
+            <FormControl mb={3} colorScheme="blue" alignSelf="center">
+              <FileUpload.Root>
+                <FileUpload.HiddenInput accept=".png, .jpg, .jpeg .webp .avif" />
+                <FileUpload.Trigger asChild>
+                  <Button size="sm">
+                    <Icon>
+                      <HiUpload />
+                    </Icon>
+                    Upload file
+                  </Button>
+                </FileUpload.Trigger>
+                <FileUpload.List />
+              </FileUpload.Root>
             </FormControl>
 
             <Box display="flex" justifyContent="flex-end" mt={4} gap={3}>

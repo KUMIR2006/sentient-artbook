@@ -1,7 +1,7 @@
 'use client';
 import { Button, Box, Heading, Text, Stack, Input, useDisclosure } from '@chakra-ui/react';
-import { useState, useEffect } from 'react';
-import { InputGroup, InputLeftElement } from '@chakra-ui/input';
+import { useState } from 'react';
+import { InputGroup } from '@chakra-ui/input';
 import FormModal from './FormModal';
 
 export default function HeroHeader() {
@@ -42,10 +42,10 @@ export default function HeroHeader() {
           _hover={{ bg: '#d6a664' }}>
           Submit your art
         </Button>
-        <Box w="full" maxW={{ base: '100%', md: '400px', lg: '600px' }} mt={10} pb={4} mx="auto">
+        <Box w="full" maxW={{ base: '100%', md: '350px', lg: '500px' }} mt={10} pb={4} mx="auto">
           <InputGroup>
             <Input
-              placeholder="Search by tag or description..."
+              placeholder="Search by tag or title..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               bg="gray.800"

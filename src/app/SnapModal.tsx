@@ -1,7 +1,6 @@
 'use client';
 import { useEffect } from 'react';
-import { Box, Text, IconButton, Image, VStack, HStack, Badge, Link } from '@chakra-ui/react';
-import { CloseIcon } from '@chakra-ui/icons';
+import { Box, Text, Image, VStack, HStack, Badge, Link } from '@chakra-ui/react';
 import { motion, AnimatePresence } from 'framer-motion';
 type SnapModalProps = {
   isOpen: boolean;

@@ -1,10 +1,9 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Box, Button, Input, Textarea } from '@chakra-ui/react';
+import { Box, Button, Input } from '@chakra-ui/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { ModalHeader, ModalBody, ModalFooter } from '@chakra-ui/modal';
 import { FormControl, FormLabel } from '@chakra-ui/form-control';
 
 const MotionBox = motion(Box);
@@ -37,7 +36,7 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
     };
     if (isOpen) window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [open, onClose]);
+  }, [isOpen, onClose]);
   return (
     <AnimatePresence>
       {isOpen && (
@@ -55,8 +54,7 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
           zIndex="9999"
           display="flex"
           alignItems="center"
-          justifyContent="center"
-          onClick={onClose}>
+          justifyContent="center">
           <MotionBox
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}

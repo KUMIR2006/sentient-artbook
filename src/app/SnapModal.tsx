@@ -6,7 +6,7 @@ type SnapModalProps = {
   isOpen: boolean;
   onClose: () => void;
   imageUrl: string;
-  message: string;
+  title: string;
   tags: string[];
   twitter?: string;
   discord?: string;
@@ -19,7 +19,7 @@ export default function SnapModal({
   isOpen,
   onClose,
   imageUrl,
-  message,
+  title,
   tags,
   twitter,
   discord,
@@ -79,7 +79,7 @@ export default function SnapModal({
             gap={6}>
             <Box minW={{ base: '100%', md: '300px' }} flexShrink={0}>
               <Text fontSize="lg" fontWeight="bold" mb={3}>
-                {message}
+                {title}
               </Text>
 
               <Text fontSize="sm" color="gray.300" mb={4}>

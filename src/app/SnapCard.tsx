@@ -3,21 +3,21 @@ import SnapModal from './SnapModal';
 import { Box, Image, Text, Stack, Link, useDisclosure, Badge } from '@chakra-ui/react';
 
 type SnapCardProps = {
-  imageUrl: string;
-  message: string;
+  image_url: string;
+  title: string;
   tags: string[];
   twitter?: string;
   discord?: string;
-  createdAt?: string;
+  created_at?: string;
 };
 
 export default function SnapCard({
-  imageUrl,
-  message,
+  image_url,
+  title,
   tags,
   twitter,
   discord,
-  createdAt,
+  created_at,
 }: SnapCardProps) {
   const { open, onOpen, onClose } = useDisclosure();
   return (
@@ -33,7 +33,7 @@ export default function SnapCard({
         onClick={onOpen}
         cursor="pointer">
         {/* Image - Always visible */}
-        <Image src={imageUrl} alt="art" objectFit="cover" w="full" h="auto" />
+        <Image src={image_url} alt="art" objectFit="cover" w="full" h="auto" />
 
         {/* Overlay content - Hidden by default, shows on hover */}
         <Box
@@ -55,7 +55,7 @@ export default function SnapCard({
           <Stack gap={3}>
             {/* Message */}
             <Text fontSize="md" fontWeight="semibold" lineHeight="1.4" gap={2}>
-              {message}
+              {title}
             </Text>
 
             {/* Tags */}
@@ -85,7 +85,7 @@ export default function SnapCard({
                 color="#FFCF85"
                 _hover={{ textDecoration: 'underline', color: '#e2a74d' }}
                 w="100px">
-                {twitter}
+                @{twitter}
               </Link>
             )}
           </Stack>
@@ -95,12 +95,12 @@ export default function SnapCard({
       <SnapModal
         isOpen={open}
         onClose={onClose}
-        imageUrl={imageUrl}
-        message={message}
+        imageUrl={image_url}
+        title={title}
         tags={tags}
         twitter={twitter}
         discord={discord}
-        createdAt={createdAt}
+        createdAt={created_at}
       />
     </>
   );

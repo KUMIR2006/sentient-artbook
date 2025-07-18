@@ -35,8 +35,8 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
   };
 
   const handleSubmit = async () => {
-    if (!selectedFile) {
-      alert('Выберите изображение!');
+    if (!selectedFile || !form.title || !form.twitter || !form.discord || !form.tags) {
+      alert('Заполните все поля');
       return;
     }
 
@@ -125,7 +125,7 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
               <FormLabel>Twitter</FormLabel>
               <Input
                 name="twitter"
-                placeholder="@username"
+                placeholder="username"
                 value={form.twitter}
                 onChange={handleChange}
                 bg="#1a1a1e"
@@ -137,7 +137,7 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
               <FormLabel>Discord</FormLabel>
               <Input
                 name="discord"
-                placeholder="yourname#0000"
+                placeholder="username"
                 value={form.discord}
                 onChange={handleChange}
                 bg="#1a1a1e"

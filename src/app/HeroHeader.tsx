@@ -1,6 +1,5 @@
 'use client';
 import { Button, Box, Heading, Text, Stack, Input, useDisclosure } from '@chakra-ui/react';
-import { useState } from 'react';
 import { InputGroup } from '@chakra-ui/input';
 import FormModal from './FormModal';
 type HeroHeaderProps = {

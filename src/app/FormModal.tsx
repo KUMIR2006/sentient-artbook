@@ -164,19 +164,25 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
               />
             </FormControl>
 
-            <FormControl mb={3} colorScheme="blue" alignSelf="center">
+            <FormControl
+              mb={3}
+              colorScheme="blue"
+              alignSelf="center"
+              isInvalid={false}
+              isDisabled={false}
+              isRequired={true}>
               <FileUpload.Root>
                 <FileUpload.HiddenInput
                   accept=".png, .jpg, .jpeg, .webp, .avif"
-                  onChange={(e) => {
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     const file = e.target.files?.[0];
                     if (file) {
                       setSelectedFile(file);
                     }
                   }}
                 />
-                <FileUpload.Trigger asChild>
-                  <Button size="sm">
+                <FileUpload.Trigger>
+                  <Button>
                     <Icon>
                       <HiUpload />
                     </Icon>

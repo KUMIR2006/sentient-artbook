@@ -124,7 +124,7 @@ export default function SnapModal({
                       Tags
                     </Text>
                     <HStack wrap="wrap" gap={2}>
-                      {tags.map((tag, index) => (
+                      {tags.slice(0, 5).map((tag, index) => (
                         <Badge
                           key={index}
                           cursor="pointer"

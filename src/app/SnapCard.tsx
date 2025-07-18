@@ -62,9 +62,9 @@ export default function SnapCard({
 
             {/* Tags */}
             <Stack direction="row" gap={2}>
-              {tags.map((tag) => (
+              {tags.slice(0, 3).map((tag, index) => (
                 <Badge
-                  key={tag}
+                  key={index}
                   bg="#bc8634"
                   px={2}
                   py={1}

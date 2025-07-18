@@ -1,7 +1,8 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { Box, Text, Image, VStack, HStack, Badge, Link } from '@chakra-ui/react';
 import { motion, AnimatePresence } from 'framer-motion';
+
 type SnapModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -11,6 +12,7 @@ type SnapModalProps = {
   twitter?: string;
   discord?: string;
   createdAt?: string;
+  setSearch: (value: string) => void;
 };
 
 const MotionBox = motion(Box);
@@ -24,15 +26,42 @@ export default function SnapModal({
   twitter,
   discord,
   createdAt,
+  setSearch,
 }: SnapModalProps) {
+  // Мемоизированная функция закрытия
+  const handleClose = useCallback(() => {
+    onClose();
+  }, [onClose]);
+
+  // Функция для закрытия с задержкой для анимации
+  const handleTagClick = useCallback(
+    (tag: string) => {
+      // Сначала ждем анимацию закрытия, потом устанавливаем поиск
+      onClose();
+      // Небольшая задержка для завершения анимации
+      setTimeout(() => {
+        setSearch(tag);
+      }, 250); // 250ms = длительность анимации + небольшой буфер
+    },
+    [onClose, setSearch],
+  );
+
   // Close modal on Escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') handleClose();
     };
-    if (isOpen) window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, onClose]);
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      // Предотвращаем скролл body когда модальное окно открыто
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, handleClose]);
+
   const formatDate = (iso: string | undefined) => {
     if (!iso) return '';
     return new Date(iso).toLocaleDateString('en-US', {
@@ -41,14 +70,15 @@ export default function SnapModal({
       day: 'numeric',
     });
   };
+
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isOpen && (
         <MotionBox
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.2, ease: 'easeInOut' }}
           position="fixed"
           top="0"
           left="0"
@@ -59,12 +89,12 @@ export default function SnapModal({
           display="flex"
           alignItems="center"
           justifyContent="center"
-          onClick={onClose}>
+          onClick={handleClose}>
           <MotionBox
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.2, ease: 'easeInOut' }}
             bg="#1F2022"
             color="white"
             p={6}
@@ -95,7 +125,16 @@ export default function SnapModal({
                     </Text>
                     <HStack wrap="wrap" gap={2}>
                       {tags.map((tag, index) => (
-                        <Badge key={index} cursor="pointer">
+                        <Badge
+                          key={index}
+                          cursor="pointer"
+                          bg="#bc8634"
+                          px={2}
+                          py={1}
+                          fontSize="xs"
+                          rounded="sm"
+                          _hover={{ bg: '#d6a664' }}
+                          onClick={() => handleTagClick(tag)}>
                           #{tag}
                         </Badge>
                       ))}

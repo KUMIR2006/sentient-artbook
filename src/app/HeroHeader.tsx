@@ -3,9 +3,11 @@ import { Button, Box, Heading, Text, Stack, Input, useDisclosure } from '@chakra
 import { useState } from 'react';
 import { InputGroup } from '@chakra-ui/input';
 import FormModal from './FormModal';
-
-export default function HeroHeader() {
-  const [searchTerm, setSearchTerm] = useState('');
+type HeroHeaderProps = {
+  search: string;
+  setSearch: (value: string) => void;
+};
+export default function HeroHeader({ search, setSearch }: HeroHeaderProps) {
   const { open, onOpen, onClose } = useDisclosure();
   return (
     <Box position="relative" w="full" h="500px" overflow="hidden" rounded="lg">
@@ -46,8 +48,8 @@ export default function HeroHeader() {
           <InputGroup>
             <Input
               placeholder="Search by tag or title..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               bg="gray.800"
               color="white"
               _placeholder={{ color: 'gray.500' }}

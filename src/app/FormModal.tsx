@@ -36,7 +36,7 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
 
   const handleSubmit = async () => {
     if (!selectedFile || !form.title || !form.twitter || !form.discord || !form.tags) {
-      alert('Заполните все поля');
+      alert('Please fill out all fields');
       return;
     }
 
@@ -55,6 +55,13 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
 
     if (result.success) {
       console.log('Арт добавлен!');
+      setForm({
+        title: '',
+        twitter: '',
+        discord: '',
+        tags: '',
+      });
+      setSelectedFile(null);
       onClose();
     } else {
       console.error('Ошибка:', result.error);

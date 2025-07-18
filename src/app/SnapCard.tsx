@@ -9,6 +9,7 @@ type SnapCardProps = {
   twitter?: string;
   discord?: string;
   created_at?: string;
+  setSearch: (value: string) => void;
 };
 
 export default function SnapCard({
@@ -18,6 +19,7 @@ export default function SnapCard({
   twitter,
   discord,
   created_at,
+  setSearch,
 }: SnapCardProps) {
   const { open, onOpen, onClose } = useDisclosure();
   return (
@@ -68,7 +70,11 @@ export default function SnapCard({
                   py={1}
                   fontSize="xs"
                   rounded="sm"
-                  _hover={{ bg: '#d6a664' }}>
+                  _hover={{ bg: '#d6a664' }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSearch(tag);
+                  }}>
                   #{tag}
                 </Badge>
               ))}
@@ -101,6 +107,7 @@ export default function SnapCard({
         twitter={twitter}
         discord={discord}
         createdAt={created_at}
+        setSearch={setSearch}
       />
     </>
   );

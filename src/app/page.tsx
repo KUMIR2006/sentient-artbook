@@ -25,6 +25,7 @@ const breakpointColumnsObj = {
 
 export default function SnapGallery() {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
+  const [search, setSearch] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [isClient, setIsClient] = useState(false);
 
@@ -48,6 +49,18 @@ export default function SnapGallery() {
     fetchArtworks();
   }, []);
 
+  const filteredArtworks = artworks.filter((artwork) => {
+    if (!search) return true;
+
+    const keyword = search.toLowerCase();
+    return (
+      artwork.title?.toLowerCase().includes(keyword) ||
+      artwork.twitter?.toLowerCase().includes(keyword) ||
+      artwork.discord?.toLowerCase().includes(keyword) ||
+      artwork.tags?.some((tag) => tag.toLowerCase().includes(keyword))
+    );
+  });
+
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -55,7 +68,7 @@ export default function SnapGallery() {
   if (loading) {
     return (
       <>
-        <HeroHeader />
+        <HeroHeader search={search} setSearch={setSearch} />
         <Box pt={0} mx="auto" pb={{ base: 8, md: 16 }} px={{ base: 4, md: 8 }}>
           <Masonry
             breakpointCols={breakpointColumnsObj}
@@ -71,14 +84,14 @@ export default function SnapGallery() {
   } else {
     return (
       <>
-        <HeroHeader />
+        <HeroHeader search={search} setSearch={setSearch} />
         <Box pt={0} mx="auto" pb={{ base: 8, md: 16 }} px={{ base: 4, md: 8 }}>
           <Masonry
             breakpointCols={breakpointColumnsObj}
             className="masonry-grid"
             columnClassName="masonry-grid_column">
-            {artworks.map((card, index) => (
-              <SnapCard key={index} {...card} />
+            {filteredArtworks.map((card, index) => (
+              <SnapCard key={index} {...card} setSearch={setSearch} />
             ))}
           </Masonry>
         </Box>

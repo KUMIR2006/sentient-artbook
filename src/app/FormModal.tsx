@@ -2,10 +2,11 @@
 import { uploadArt } from '@/lib/uploadArt';
 import { useEffect } from 'react';
 import { Box, Button, Input, FileUpload, Icon } from '@chakra-ui/react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, warning } from 'framer-motion';
 import { useState } from 'react';
 import { FormControl, FormLabel } from '@chakra-ui/form-control';
 import { HiUpload } from 'react-icons/hi';
+import { toaster } from '@/components/ui/toaster';
 
 const MotionBox = motion(Box);
 type FormModalProps = {
@@ -36,7 +37,10 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
 
   const handleSubmit = async () => {
     if (!selectedFile || !form.title || !form.twitter || !form.discord || !form.tags) {
-      alert('Please fill out all fields');
+      toaster.create({
+        title: 'Please fill out all fields',
+        type: 'warning', // исправил: type должен быть строкой
+      });
       return;
     }
 
@@ -45,28 +49,50 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
       .map((tag) => tag.trim())
       .filter((tag) => tag.length > 0);
 
-    const result = await uploadArt({
-      title: form.title,
-      twitter: form.twitter,
-      discord: form.discord,
-      tags: tagArray,
-      file: selectedFile,
-    });
+    const result = await toaster.promise(
+      // оборачиваем uploadArt вручную, чтобы выбросить ошибку
+      (async () => {
+        const response = await uploadArt({
+          title: form.title,
+          twitter: form.twitter,
+          discord: form.discord,
+          tags: tagArray,
+          file: selectedFile,
+        });
 
-    if (result.success) {
-      console.log('Арт добавлен!');
-      setForm({
-        title: '',
-        twitter: '',
-        discord: '',
-        tags: '',
-      });
-      setSelectedFile(null);
-      onClose();
-    } else {
-      console.error('Ошибка:', result.error);
-      alert(result.error);
-    }
+        if (!response.success) {
+          throw new Error(response.error || 'Unknown error');
+        }
+
+        return response;
+      })(),
+      {
+        loading: { title: 'Uploading...', description: 'Please wait' },
+        success: { title: 'Uploaded!', description: 'Your art was uploaded successfully.' },
+        error: (err: unknown) => {
+          const message =
+            err instanceof Error
+              ? err.message
+              : typeof err === 'string'
+                ? err
+                : 'Something went wrong';
+          return {
+            title: 'Upload failed',
+            description: message,
+          };
+        },
+      },
+    );
+
+    // если мы дошли до сюда — всё прошло успешно
+    setForm({
+      title: '',
+      twitter: '',
+      discord: '',
+      tags: '',
+    });
+    setSelectedFile(null);
+    onClose();
   };
 
   useEffect(() => {

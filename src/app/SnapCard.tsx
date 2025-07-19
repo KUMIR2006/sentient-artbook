@@ -34,10 +34,8 @@ export default function SnapCard({
         className="snap-card"
         onClick={onOpen}
         cursor="pointer">
-        {/* Image - Always visible */}
         <Image src={image_url} alt="art" objectFit="cover" w="full" h="auto" />
 
-        {/* Overlay content - Hidden by default, shows on hover */}
         <Box
           position="absolute"
           bottom="0"
@@ -55,12 +53,10 @@ export default function SnapCard({
           justifyContent="flex-end"
           className="overlay-content">
           <Stack gap={3}>
-            {/* Message */}
             <Text fontSize="md" fontWeight="semibold" lineHeight="1.4" gap={2}>
               {title}
             </Text>
 
-            {/* Tags */}
             <Stack direction="row" gap={2}>
               {tags.slice(0, 3).map((tag, index) => (
                 <Badge
@@ -80,8 +76,6 @@ export default function SnapCard({
               ))}
             </Stack>
 
-            {/* Social links and date */}
-
             {twitter && (
               <Link
                 href={`https://twitter.com/${twitter.replace('@', '')}`}
@@ -91,7 +85,7 @@ export default function SnapCard({
                 color="#FFCF85"
                 _hover={{ textDecoration: 'underline', color: '#e2a74d' }}
                 w="100px">
-                @{twitter}
+                {twitter}
               </Link>
             )}
           </Stack>

@@ -55,7 +55,7 @@ export default function HeroHeader({ search, setSearch }: HeroHeaderProps) {
               border="none"
               px={4}
               py={3}
-              borderRadius="2xl" // большое скругление
+              borderRadius="2xl"
               fontSize="lg"
               _hover={{ bg: 'gray.700' }}
               _focus={{ bg: 'gray.700', boxShadow: '0 0 0 1px #63b3ed' }}

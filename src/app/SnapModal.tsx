@@ -28,32 +28,26 @@ export default function SnapModal({
   createdAt,
   setSearch,
 }: SnapModalProps) {
-  // Мемоизированная функция закрытия
   const handleClose = useCallback(() => {
     onClose();
   }, [onClose]);
 
-  // Функция для закрытия с задержкой для анимации
   const handleTagClick = useCallback(
     (tag: string) => {
-      // Сначала ждем анимацию закрытия, потом устанавливаем поиск
       onClose();
-      // Небольшая задержка для завершения анимации
       setTimeout(() => {
         setSearch(tag);
-      }, 250); // 250ms = длительность анимации + небольшой буфер
+      }, 250);
     },
     [onClose, setSearch],
   );
 
-  // Close modal on Escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') handleClose();
     };
     if (isOpen) {
       window.addEventListener('keydown', handleKeyDown);
-      // Предотвращаем скролл body когда модальное окно открыто
       document.body.style.overflow = 'hidden';
     }
     return () => {
@@ -117,7 +111,6 @@ export default function SnapModal({
               </Text>
 
               <VStack align="start" gap={3}>
-                {/* Tags */}
                 {tags?.length > 0 && (
                   <Box>
                     <Text fontWeight="semibold" mb={1}>
@@ -142,7 +135,6 @@ export default function SnapModal({
                   </Box>
                 )}
 
-                {/* Socials */}
                 {(twitter || discord) && (
                   <Box>
                     <Text fontWeight="semibold" mb={1}>
@@ -167,7 +159,6 @@ export default function SnapModal({
               </VStack>
             </Box>
 
-            {/* Photo */}
             <Box
               flex="1"
               display="flex"

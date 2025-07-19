@@ -1,16 +1,16 @@
 .masonry-grid {
   display: flex;
-  margin-left: -8px; /* Отрицательный отступ компенсирует padding колонок */
+  margin-left: -8px;
   width: 100%;
 }
 
 .masonry-grid_column {
-  padding-left: 10px; /* Отступ между колонками */
+  padding-left: 10px;
   background-clip: padding-box;
 }
 
 .masonry-grid_column > div {
-  margin-bottom: 10px; /* Вертикальный отступ между карточками, можно оставить */
+  margin-bottom: 10px;
 }
 
 .snap-card:hover .overlay-content {

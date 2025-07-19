@@ -14,7 +14,7 @@ type Artwork = {
   image_url: string;
   twitter: string;
   discord: string;
-  tags: string[]; // если это массив
+  tags: string[];
 };
 
 const breakpointColumnsObj = {

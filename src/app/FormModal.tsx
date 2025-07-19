@@ -2,7 +2,7 @@
 import { uploadArt } from '@/lib/uploadArt';
 import { useEffect } from 'react';
 import { Box, Button, Input, FileUpload, Icon } from '@chakra-ui/react';
-import { motion, AnimatePresence, warning } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { FormControl, FormLabel } from '@chakra-ui/form-control';
 import { HiUpload } from 'react-icons/hi';
@@ -39,7 +39,7 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
     if (!selectedFile || !form.title || !form.twitter || !form.discord || !form.tags) {
       toaster.create({
         title: 'Please fill out all fields',
-        type: 'warning', // исправил: type должен быть строкой
+        type: 'warning',
       });
       return;
     }
@@ -50,7 +50,6 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
       .filter((tag) => tag.length > 0);
 
     const result = await toaster.promise(
-      // оборачиваем uploadArt вручную, чтобы выбросить ошибку
       (async () => {
         const response = await uploadArt({
           title: form.title,
@@ -68,7 +67,7 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
       })(),
       {
         loading: { title: 'Uploading...', description: 'Please wait' },
-        success: { title: 'Uploaded!', description: 'Your art was uploaded successfully.' },
+        success: { title: 'Uploaded!', description: 'Your art will be published after moderation' },
         error: (err: unknown) => {
           const message =
             err instanceof Error
@@ -84,7 +83,6 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
       },
     );
 
-    // если мы дошли до сюда — всё прошло успешно
     setForm({
       title: '',
       twitter: '',
@@ -158,7 +156,7 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
               <FormLabel>Twitter</FormLabel>
               <Input
                 name="twitter"
-                placeholder="username"
+                placeholder="@username"
                 value={form.twitter}
                 onChange={handleChange}
                 bg="#1a1a1e"

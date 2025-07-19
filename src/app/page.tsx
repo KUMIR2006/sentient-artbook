@@ -19,6 +19,9 @@ type Artwork = {
 
 const breakpointColumnsObj = {
   default: 4,
+  1200: 4,
+  1000: 3,
+  768: 2,
   640: 2,
   400: 1,
 };

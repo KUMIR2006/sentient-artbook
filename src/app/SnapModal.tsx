@@ -1,8 +1,8 @@
 'use client';
 import { useEffect, useCallback } from 'react';
-import { Box, Text, Image, VStack, HStack, Badge, Link } from '@chakra-ui/react';
+import { Box, Text, Image, VStack, HStack, Badge, Link, IconButton } from '@chakra-ui/react';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import { IoClose } from 'react-icons/io5';
 type SnapModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -102,11 +102,28 @@ export default function SnapModal({
             flexDirection={{ base: 'column', md: 'row' }}
             gap={6}>
             <Box minW={{ base: '100%', md: '300px' }} flexShrink={0}>
-              <Text fontSize="lg" fontWeight="bold" mb={3}>
-                {title}
-              </Text>
+              <Box
+                direction="row"
+                justifyContent="space-between"
+                display="flex"
+                alignItems="center">
+                <Text fontSize="lg" fontWeight="bold" width="fit-content">
+                  {title}
+                </Text>
+                <IconButton
+                  aria-label="Close modal"
+                  onClick={handleClose}
+                  size="sm"
+                  variant="ghost"
+                  color="white"
+                  _hover={{ bg: 'rgba(255, 255, 255, 0.1)' }}
+                  _active={{ bg: 'rgba(255, 255, 255, 0.2)' }}
+                  display={{ base: 'flex', md: 'none' }}>
+                  <IoClose />
+                </IconButton>
+              </Box>
 
-              <Text fontSize="sm" color="gray.300" mb={4}>
+              <Text fontSize="sm" color="gray.300" mb={2}>
                 {formatDate(createdAt)}
               </Text>
 

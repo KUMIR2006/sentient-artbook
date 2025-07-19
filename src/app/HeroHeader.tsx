@@ -43,7 +43,7 @@ export default function HeroHeader({ search, setSearch }: HeroHeaderProps) {
           _hover={{ bg: '#d6a664' }}>
           Submit your art
         </Button>
-        <Box w="full" maxW={{ base: '100%', md: '350px', lg: '500px' }} mt={10} pb={4} mx="auto">
+        <Box w="full" maxW={{ base: '80%', md: '350px', lg: '500px' }} mt={10} pb={4} mx="auto">
           <InputGroup>
             <Input
               placeholder="Search by tag or title..."
